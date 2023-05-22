@@ -20,10 +20,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.github.baker.internal.entity.User;
-import org.github.baker.internal.inter.UserMapper;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,7 +37,6 @@ public class MybatisHelloWorld {
 
     public static void main(String[] args) {
         String resource = "Configuration.xml";
-
         try (Reader reader = Resources.getResourceAsReader(resource)) {
             // 解析classpath下的所有xml为Configuration，且构建为DefaultSqlSessionFactory
             SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(reader);
@@ -47,10 +46,10 @@ public class MybatisHelloWorld {
 //               List<User> users = session.selectList("org.github.baker.internal.inter.UserInterface.selectAllUser");
                 // 1.statement 唯一标识
                 System.out.println("statement：" + user);
-                // 2.接口直接访问
-                UserMapper mapper = session.getMapper(UserMapper.class);
-                User mapperUser = mapper.selectById(1L);
-                System.out.println("mapperUser：" + mapperUser);
+//                // 2.接口直接访问
+//                UserMapper mapper = session.getMapper(UserMapper.class);
+//                User mapperUser = mapper.selectById(1L);
+//                System.out.println("mapperUser：" + mapperUser);
 
             } catch (Exception e) {
                 e.printStackTrace();

@@ -19,12 +19,33 @@ import java.sql.Connection;
 
 /**
  * @author Clinton Begin
+ * 事物隔离级别
+ *
+ *
  */
 public enum TransactionIsolationLevel {
+  /**
+   * 无隔离
+   */
   NONE(Connection.TRANSACTION_NONE),
+
+  /**
+   * 读已提交（A有未提交的）
+   */
   READ_COMMITTED(Connection.TRANSACTION_READ_COMMITTED),
+
+  /**
+   * 读未提交（可以读到未提交的数据，会导致脏读，幻读以及不可重复读）
+   */
   READ_UNCOMMITTED(Connection.TRANSACTION_READ_UNCOMMITTED),
+
+  /**
+   * 可重复读（在读期间加锁）
+   */
   REPEATABLE_READ(Connection.TRANSACTION_REPEATABLE_READ),
+  /**
+   *
+   */
   SERIALIZABLE(Connection.TRANSACTION_SERIALIZABLE);
 
   private final int level;

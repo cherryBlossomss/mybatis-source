@@ -113,6 +113,7 @@ public class XMLMapperBuilder extends BaseBuilder {
         throw new BuilderException("Mapper's namespace cannot be empty");
       }
       builderAssistant.setCurrentNamespace(namespace);
+      // 缓存解析 - 二级缓存
       cacheRefElement(context.evalNode("cache-ref"));
       cacheElement(context.evalNode("cache"));
       parameterMapElement(context.evalNodes("/mapper/parameterMap"));

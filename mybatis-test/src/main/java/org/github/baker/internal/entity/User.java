@@ -15,6 +15,7 @@
  */
 package org.github.baker.internal.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Date;
  * @author luohuiqi
  * @date : 2023/5/15 23:33
  **/
-public class User {
+public class User implements Serializable {
 
     private Long id;
     private String userName;

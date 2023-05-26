@@ -112,6 +112,7 @@ public class CacheKey implements Cloneable, Serializable {
 
   @Override
   public String toString() {
+    // 缓存的key eg：559857688:2426396431:a.selectById:0:2147483647:select id,user_name,create_time from user where id = ?:1:development
     StringBuilder returnValue = new StringBuilder().append(hashcode).append(':').append(checksum);
     for (Object object : updateList) {
       returnValue.append(':').append(ArrayUtil.toString(object));

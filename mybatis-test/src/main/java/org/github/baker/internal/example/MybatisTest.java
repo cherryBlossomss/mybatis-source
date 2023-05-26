@@ -20,40 +20,49 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.github.baker.internal.entity.User;
+import org.github.baker.internal.inter.UserMapper;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
+ * <p>测试例子</p>
  *
- * @author: zhubo
- * @description:
- * @time: 2018年10月20日
- * @modifytime:
- */
-public class MybatisHelloWorld {
+ * @author luohuiqi
+ * @date : 2023/5/22 17:07
+ **/
+public class MybatisTest {
 
     public static void main(String[] args) {
         String resource = "Configuration.xml";
         try (Reader reader = Resources.getResourceAsReader(resource)) {
             // 解析classpath下的所有xml为Configuration，且构建为DefaultSqlSessionFactory
-            SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             // 准备执行器execute  ==>DefaultSqlSession
-            try (SqlSession session = sqlMapper.openSession()) {
-                User user = session.selectOne("org.github.baker.internal.inter.UserMapper.selectById", 1L);
-//               List<User> users = session.selectList("org.github.baker.internal.inter.UserInterface.selectAllUser");
-                // 1.statement 唯一标识
-                System.out.println("statement：" + user);
-//                // 2.接口直接访问
-//                UserMapper mapper = session.getMapper(UserMapper.class);
-//                User mapperUser = mapper.selectById(1L);
-//                System.out.println("mapperUser：" + mapperUser);
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                User userA = session.selectOne("a.selectById", 1L);
+                System.out.println("userA = " + userA);
+//                User user = session.selectOne("org.github.baker.internal.inter.UserMapper.selectById", 1L);
+////               List<User> users = session.selectList("org.github.baker.internal.inter.UserInterface.selectAllUser");
+//                // 1.statement 唯一标识
+//                System.out.println("statement：" + user);
+                // 2.接口直接访问
+                UserMapper mapper = session.getMapper(UserMapper.class);
+                User mapperUser = mapper.selectById(1L);
+                System.out.println("mapperUser：" + mapperUser);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                User userA = session.selectOne("a.selectById", 1L);
+                System.out.println("userA = " + userA);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -32,5 +32,6 @@
     </environments>
     <mappers>
         <mapper resource="org/github/baker/internal/mapper/UserMapper.xml"/>
+        <mapper resource="org/github/baker/internal/mapper/UserAMapper.xml"/>
     </mappers>
 </configuration>

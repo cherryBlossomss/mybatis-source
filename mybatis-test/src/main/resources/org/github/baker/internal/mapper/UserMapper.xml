@@ -28,7 +28,10 @@
     
     
     <select id="selectById" parameterType="long" resultMap="result">
-        select id,user_name,create_time from user where id = #{id}
+        select id,user_name,create_time from user
+            <if test="id != null and id != ''">
+                where id = #{id}
+            </if>
     </select>
 
     <select id="selectAllUser"  resultMap="result">

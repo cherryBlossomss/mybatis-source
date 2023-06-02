@@ -14,8 +14,11 @@
     </resultMap>
 
 
-    <select id="selectById" parameterType="long" resultMap="result" >
-        select id,user_name,create_time from user where id = #{id}
+    <select id="selectById"  resultMap="result" >
+        select id,user_name,create_time from user
+
+                where id = #{id}
+
     </select>
 
     <select id="selectAllUser"  resultMap="result">

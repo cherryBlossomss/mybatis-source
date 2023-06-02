@@ -1021,3 +1021,142 @@ public class SimpleExecutor extends BaseExecutor {
     }
 }
 ```
+
+### 职责链模式
+
+InterceptorChain的pluginAll方法为target对象plugin化
+
+MyBatis Plugin
+
+```java
+public class InterceptorChain {
+
+  private final List<Interceptor> interceptors = new ArrayList<>();
+
+  public Object pluginAll(Object target) {
+    for (Interceptor interceptor : interceptors) {
+      target = interceptor.plugin(target);
+//      target =  Plugin.wrap(target, interceptor);
+    }
+    return target;
+  }
+
+  public void addInterceptor(Interceptor interceptor) {
+    interceptors.add(interceptor);
+  }
+
+  public List<Interceptor> getInterceptors() {
+    return Collections.unmodifiableList(interceptors);
+  }
+
+}
+```
+```java
+public class Plugin implements InvocationHandler {
+
+    // 为targer生成代理对象
+    public static Object wrap(Object target, Interceptor interceptor) {
+        Map<Class<?>, Set<Method>> signatureMap = getSignatureMap(interceptor);
+        Class<?> type = target.getClass();
+        Class<?>[] interfaces = getAllInterfaces(type, signatureMap);
+        if (interfaces.length > 0) {
+            return Proxy.newProxyInstance(
+                    type.getClassLoader(),
+                    interfaces,
+                    new Plugin(target, interceptor, signatureMap));
+        }
+        return target;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        try {
+            Set<Method> methods = signatureMap.get(method.getDeclaringClass());
+            if (methods != null && methods.contains(method)) {
+                return interceptor.intercept(new Invocation(target, method, args));
+            }
+            return method.invoke(target, args);
+        } catch (Exception e) {
+            throw ExceptionUtil.unwrapThrowable(e);
+        }
+    }
+}
+```
+### 适配器模式
+
+```java
+public interface Log {
+
+  boolean isDebugEnabled();
+
+  boolean isTraceEnabled();
+
+  void error(String s, Throwable e);
+
+  void error(String s);
+
+  void debug(String s);
+
+  void trace(String s);
+
+  void warn(String s);
+}
+```
+
+```java
+
+public class Log4j2Impl implements Log {
+
+  private final Log log;
+
+  public Log4j2Impl(String clazz) {
+    Logger logger = LogManager.getLogger(clazz);
+
+    if (logger instanceof AbstractLogger) {
+      log = new Log4j2AbstractLoggerImpl((AbstractLogger) logger);
+    } else {
+      log = new Log4j2LoggerImpl(logger);
+    }
+  }
+  
+  @Override
+  public boolean isDebugEnabled() {
+    return log.isDebugEnabled();
+  }
+
+  @Override
+  public boolean isTraceEnabled() {
+    return log.isTraceEnabled();
+  }
+
+  @Override
+  public void error(String s, Throwable e) {
+    log.error(s, e);
+  }
+
+  @Override
+  public void error(String s) {
+    log.error(s);
+  }
+
+  @Override
+  public void debug(String s) {
+    log.debug(s);
+  }
+
+  @Override
+  public void trace(String s) {
+    log.trace(s);
+  }
+
+  @Override
+  public void warn(String s) {
+    log.warn(s);
+  }   
+}
+
+```
+### 解释器模式
+
+动态sql解析（解释）
+![img.png](img.png)

@@ -15,6 +15,7 @@
  */
 package org.github.baker.internal.inter;
 
+import org.apache.ibatis.annotations.Param;
 import org.github.baker.internal.entity.User;
 
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.List;
  **/
 public interface UserMapper {
 
-    User selectById(Long id);
+    User selectById(@Param("id") Long id);
 
     List<User> selectAllUser();
 }

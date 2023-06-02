@@ -102,6 +102,7 @@ public class TransactionalCache implements Cache {
     if (clearOnCommit) {
       delegate.clear();
     }
+
     flushPendingEntries();
     reset();
   }

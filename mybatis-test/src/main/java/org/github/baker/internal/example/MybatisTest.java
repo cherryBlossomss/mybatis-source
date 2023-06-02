@@ -40,8 +40,8 @@ public class MybatisTest {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             // 准备执行器execute  ==>DefaultSqlSession
             try (SqlSession session = sqlSessionFactory.openSession()) {
-                User userA = session.selectOne("a.selectById", 1L);
-                System.out.println("userA = " + userA);
+//                User userA = session.selectOne("a.selectById", 1L);
+//                System.out.println("userA = " + userA);
 //                User user = session.selectOne("org.github.baker.internal.inter.UserMapper.selectById", 1L);
 ////               List<User> users = session.selectList("org.github.baker.internal.inter.UserInterface.selectAllUser");
 //                // 1.statement 唯一标识
@@ -53,14 +53,14 @@ public class MybatisTest {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            try (SqlSession session = sqlSessionFactory.openSession()) {
-                User userA = session.selectOne("a.selectById", 1L);
-                System.out.println("userA = " + userA);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//
+//            try (SqlSession session = sqlSessionFactory.openSession()) {
+//                User userA = session.selectOne("a.selectById", 1L);
+//                System.out.println("userA = " + userA);
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 
 
         } catch (IOException e) {
